@@ -72,7 +72,12 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     // Retrofit
-    implementation(libs.retrofit)
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+
+    // GSON
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
+
 
     // KSP
     ksp(libs.androidx.room.compiler)

@@ -2,6 +2,7 @@ package com.andronest.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Primary: Color = Color(0xFF2B77EA)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
