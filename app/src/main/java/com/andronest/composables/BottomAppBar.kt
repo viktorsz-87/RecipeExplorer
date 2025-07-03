@@ -7,43 +7,79 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
+import com.andronest.R
+import com.andronest.navigation.Navigation
 import com.andronest.ui.theme.Primary
 
 @Composable
-fun BottomAppBar(modifier: Modifier = Modifier) {
+fun BottomAppBar(
+    navController: NavController,
+    onDiscover: () -> Unit = {},
+    onHome: () -> Unit = {},
+    selectedIndex: Int,
+    modifier: Modifier = Modifier
+) {
 
-    val navItems = listOf<NavBarItem>(
-        NavBarItem(icon = Icons.Default.Home, description = "Home",route="Home"),
-        NavBarItem(icon = Icons.Default.Search, description = "Search by name",route="Search")
+    val navItems = listOf(
+        NavBarItem(
+            iconImageVector = Icons.Default.Home,
+            title = Navigation.Home.route,
+            route = Navigation.Home.route
+        ),
+        NavBarItem(
+            icon = R.drawable.baseline_bakery_dining_48,
+            title = Navigation.Discover.route,
+            route = Navigation.Discover.route
+        ),
+        NavBarItem(
+            iconImageVector = Icons.Default.Search,
+            title = Navigation.Search.route,
+            route = Navigation.Search.route
+        )
     )
 
-    val selectedIndex = remember {mutableIntStateOf(0)}
+    //var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
 
     NavigationBar(
         containerColor = Primary.copy(alpha = 0.6f)
-    ){
+    ) {
 
         navItems.forEachIndexed { index, item ->
             NavigationBarItem(
-                onClick = { selectedIndex.value = index},
-                selected = index==selectedIndex.value,
+                onClick = {
+
+                    when(item.route){
+                        Navigation.Discover.route -> {
+                            onDiscover()
+                        }
+                        Navigation.Home.route -> {
+                            onHome()
+                        }
+                    }
+                },
+                selected = index == selectedIndex,
                 icon = {
-                    Icon(
-                        imageVector = navItems[index].icon,
-                        contentDescription = navItems[index].description)
+
+                    if (item.icon != null) {
+                        Icon(painterResource(item.icon), contentDescription = item.title)
+                    } else {
+                        item.iconImageVector?.let { icon ->
+                            Icon(imageVector = icon, contentDescription = item.title)
+                        }
+                    }
                 }
             )
         }
-
     }
 }
 
 data class NavBarItem(
-    val icon: ImageVector,
-    val description: String,
-    val route: String
+    val icon: Int? = null,
+    val iconImageVector: ImageVector? = null,
+    val title: String? = null,
+    val route: String? = null
 )

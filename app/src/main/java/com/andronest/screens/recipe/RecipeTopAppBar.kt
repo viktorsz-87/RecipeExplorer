@@ -1,7 +1,7 @@
-package com.andronest.composables
+package com.andronest.screens.recipe
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,17 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavController
 import com.andronest.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopAppBar(modifier: Modifier = Modifier) {
+fun RecipeTopAppBar(
+    navController: NavController,
+    modifier: Modifier = Modifier) {
 
     TopAppBar(
-        actions = {
 
-            IconButton(onClick = {}) {
-                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu options")
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -37,7 +40,7 @@ fun MyTopAppBar(modifier: Modifier = Modifier) {
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 ),
-                text = "Recipe App", maxLines = 1, overflow = TextOverflow.Ellipsis
+                text = "Home", maxLines = 1, overflow = TextOverflow.Ellipsis
             )
         })
 }
