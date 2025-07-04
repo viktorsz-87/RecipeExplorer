@@ -1,4 +1,5 @@
-package com.andronest.screens.home
+package com.andronest.screens.discover
+
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.andronest.model.MealResponse.Meal
+import com.andronest.model.MealResponse
 
 
 @Composable
-fun HomeScreenItemCard(
-    item: Meal,
+fun DiscoverScreenCard(
+    item: MealResponse.Meal,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -27,8 +28,7 @@ fun HomeScreenItemCard(
         border = BorderStroke(2.dp, color = Color.Black)
     ) {
 
-
-        HomeScreenItem(item, modifier = modifier)
-
+        DiscoverScreenItem(item = item)
     }
+
 }

@@ -1,7 +1,7 @@
 package com.andronest.repository
 
 import android.util.Log
-import com.andronest.model.Meal
+import com.andronest.model.MealResponse
 import com.andronest.retrofit.RetrofitApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class MealRepository @Inject constructor(
     val retrofitApi: RetrofitApi) {
 
-    suspend fun getSingleRandomMeal(): List<Meal>{
+    suspend fun getSingleRandomMeal(): List<MealResponse.Meal>{
 
         return try {
             retrofitApi.getSingleRandomMeal().meals
@@ -19,7 +19,7 @@ class MealRepository @Inject constructor(
             emptyList()
         }
     }
-    suspend fun getMealsByFirstLetter(letter: String):List<Meal>{
+    suspend fun getMealsByFirstLetter(letter: String):List<MealResponse.Meal>{
 
         return try {
             retrofitApi.searchMealsByFirstLetter(letter).meals

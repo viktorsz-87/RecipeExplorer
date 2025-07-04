@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
-import com.andronest.model.Meal
+import com.andronest.model.MealResponse.Meal
 import com.andronest.viewmodel.HomeViewModel
 
 
@@ -27,7 +27,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
 
-    val mealsDataState = viewModel.mealsResponse.collectAsState(emptyList())
+    val mealsDataState  = viewModel.mealsResponse.collectAsState()
     val mealsData: List<Meal> = mealsDataState.value
 
     Scaffold(
