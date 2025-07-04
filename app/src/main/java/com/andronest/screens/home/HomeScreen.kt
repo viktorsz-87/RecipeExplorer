@@ -23,7 +23,7 @@ fun HomeScreen(
     navController: NavController,
     onDiscover: ()->Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    selectedIndex: Int,
+    selectedScreen: String?,
     modifier: Modifier = Modifier
 ) {
 
@@ -36,8 +36,7 @@ fun HomeScreen(
             BottomAppBar(
                 navController,
                 onDiscover = onDiscover,
-                selectedIndex = selectedIndex,
-
+                selectedScreen = selectedScreen
             )
         }) { paddingValues ->
 

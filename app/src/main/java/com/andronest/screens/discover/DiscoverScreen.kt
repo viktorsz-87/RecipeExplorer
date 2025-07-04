@@ -18,7 +18,7 @@ fun DiscoverScreen(
     navController: NavController,
     onHome: ()->Unit,
     viewModel: DiscoverViewModel = hiltViewModel(),
-    selectedIndex: Int,
+    selectedScreen: String?,
     modifier: Modifier = Modifier) {
 
     Scaffold(
@@ -29,7 +29,7 @@ fun DiscoverScreen(
             BottomAppBar(
                 navController,
                 onHome = onHome,
-                selectedIndex = selectedIndex)
+                selectedScreen = selectedScreen)
         }
     ) { paddingValues ->
 

@@ -20,7 +20,7 @@ fun BottomAppBar(
     navController: NavController,
     onDiscover: () -> Unit = {},
     onHome: () -> Unit = {},
-    selectedIndex: Int,
+    selectedScreen: String?,
     modifier: Modifier = Modifier
 ) {
 
@@ -42,8 +42,6 @@ fun BottomAppBar(
         )
     )
 
-    //var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
-
     NavigationBar(
         containerColor = Primary.copy(alpha = 0.6f)
     ) {
@@ -52,16 +50,20 @@ fun BottomAppBar(
             NavigationBarItem(
                 onClick = {
 
-                    when(item.route){
-                        Navigation.Discover.route -> {
-                            onDiscover()
-                        }
-                        Navigation.Home.route -> {
-                            onHome()
+                    if(item.route != selectedScreen){
+
+                        when(item.route)
+                        {
+                            Navigation.Home.route -> {
+                                onHome()
+                            }
+                            Navigation.Discover.route -> {
+                                onDiscover()
+                            }
                         }
                     }
                 },
-                selected = index == selectedIndex,
+                selected = item.route == selectedScreen,
                 icon = {
 
                     if (item.icon != null) {

@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.andronest.navigation.Navigation
 import com.andronest.screens.discover.DiscoverScreen
@@ -29,7 +29,14 @@ class MainActivity : ComponentActivity() {
             RecipeExplorerTheme {
 
                 val navController = rememberNavController()
-                var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
+                val currentBackStackEntry by navController.currentBackStackEntryAsState()
+
+                // Derived state of: Runs logic only on state change
+                val selectedScreen = remember(currentBackStackEntry){
+                    derivedStateOf {
+                        currentBackStackEntry?.destination?.route
+                    }
+                }.value
 
                 NavHost(
                     navController,
@@ -42,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             onDiscover = {
                                 navController.navigate(Navigation.Discover.route)
                             },
-                            selectedIndex = selectedIndex
+                            selectedScreen=selectedScreen
                         )
                     }
                     composable(Navigation.Discover.route) {
@@ -51,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             onHome = {
                                 navController.navigate(Navigation.Home.route)
                             },
-                            selectedIndex = selectedIndex,
+                            selectedScreen=selectedScreen,
                         )
                     }
 
