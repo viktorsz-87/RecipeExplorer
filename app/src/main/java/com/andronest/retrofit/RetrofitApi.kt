@@ -10,6 +10,9 @@ import javax.inject.Singleton
 @Singleton
 interface RetrofitApi{
 
+    @GET("lookup.php")
+    suspend fun lookupMealById(@Query("i") id:String): MealResponse
+
     @GET("search.php")
     suspend fun searchMealsByFirstLetter(@Query("f") firstLetter: String): MealResponse
 

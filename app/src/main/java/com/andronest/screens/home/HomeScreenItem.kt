@@ -1,5 +1,6 @@
 package com.andronest.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,10 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.andronest.model.MealResponse.Meal
+import com.andronest.ui.theme.ShowDetails
 
 @Composable
 fun HomeScreenItem(
     item: Meal,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier) {
 
     Row(
@@ -58,6 +61,12 @@ fun HomeScreenItem(
                 Text(text = "Category: $category", style= MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                modifier = Modifier.clickable(onClick = { onClick() }),
+                color = ShowDetails,
+                text = "Show details",
+                style = MaterialTheme.typography.titleMedium)
         }
     }
 }

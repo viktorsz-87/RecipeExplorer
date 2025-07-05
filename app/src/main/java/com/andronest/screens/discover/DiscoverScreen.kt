@@ -17,6 +17,7 @@ import com.andronest.viewmodel.DiscoverViewModel
 
 @Composable
 fun DiscoverScreen(
+    mealId: String? = null,
     navController: NavController,
     onHome: ()->Unit,
     viewModel: DiscoverViewModel = hiltViewModel(),
@@ -25,6 +26,14 @@ fun DiscoverScreen(
 
     val discoverMealState = viewModel.discoverResponse.collectAsState()
     val discoverMeal:List<Meal> = discoverMealState.value
+
+    val discoverFetchMealByIdState = viewModel.fetchMealByIdResponse.collectAsState()
+    val discoverFetchMealById:List<Meal> = discoverFetchMealByIdState.value
+
+    mealId?.let {
+        viewModel.fetchMealById(it)
+    }
+
 
     Scaffold(
         topBar = {
@@ -42,11 +51,15 @@ fun DiscoverScreen(
             .padding(paddingValues)
             .fillMaxSize()){
 
-            items(discoverMeal){item->
-                DiscoverScreenCard(item)
+            if(mealId!=null) {
+                items(discoverFetchMealById){item->
+                    DiscoverScreenCard(item)
+                }
+            } else {
+                items(discoverMeal){item->
+                    DiscoverScreenCard(item)
+                }
             }
-
-
         }
     }
 }

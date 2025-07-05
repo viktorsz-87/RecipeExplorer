@@ -21,13 +21,13 @@ import com.andronest.viewmodel.HomeViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
-    onDiscover: ()->Unit,
+    onDiscover: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     selectedScreen: String?,
     modifier: Modifier = Modifier
 ) {
 
-    val mealsDataState  = viewModel.mealsResponse.collectAsState()
+    val mealsDataState = viewModel.mealsResponse.collectAsState()
     val mealsData: List<Meal> = mealsDataState.value
 
     Scaffold(
@@ -47,7 +47,10 @@ fun HomeScreen(
             ) {
 
                 items(items = mealsData) { meal ->
-                    HomeScreenItemCard(meal)
+                    HomeScreenItemCard(
+                        navController = navController,
+                        item = meal
+                    )
                 }
 
             }

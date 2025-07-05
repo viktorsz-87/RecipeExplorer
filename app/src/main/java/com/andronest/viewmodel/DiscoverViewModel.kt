@@ -19,8 +19,18 @@ class DiscoverViewModel @Inject constructor(
     private var _discoverResponse = MutableStateFlow<List<Meal>>(emptyList())
     var discoverResponse: StateFlow<List<Meal>> = _discoverResponse.asStateFlow()
 
+    private var _fetchMealByIdResponse = MutableStateFlow<List<Meal>>(emptyList())
+    var fetchMealByIdResponse = _fetchMealByIdResponse.asStateFlow()
+
+
     init {
         fetchDiscoveryData()
+    }
+
+    fun fetchMealById(id: String){
+        viewModelScope.launch {
+            _fetchMealByIdResponse.value = repository.getMealById(id)
+        }
     }
 
     private fun fetchDiscoveryData() {

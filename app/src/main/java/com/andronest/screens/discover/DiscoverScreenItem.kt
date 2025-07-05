@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +31,22 @@ fun DiscoverScreenItem(
     item: Meal,
     modifier: Modifier = Modifier
 ) {
+    Spacer(modifier = modifier.height(20.dp))
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(6.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.Top
+    ) {
+        AsyncImage(
+            model = item.strMealThumb,
+            contentDescription = item.strMeal,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+        )
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -40,17 +55,13 @@ fun DiscoverScreenItem(
         verticalAlignment = Alignment.Top
     ) {
 
-        AsyncImage(
-            model = item.strMealThumb,
-            contentDescription = item.strMeal,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(150.dp)
-                .clip(RoundedCornerShape(8.dp))
-        )
+
         Spacer(modifier = modifier.width(16.dp))
 
-        Column() {
+        Column(
+            modifier=modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top) {
             item.strMeal?.let {
                 Text(
                     text = it,

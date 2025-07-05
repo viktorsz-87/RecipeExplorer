@@ -10,6 +10,15 @@ import javax.inject.Singleton
 class MealRepository @Inject constructor(
     val retrofitApi: RetrofitApi) {
 
+    suspend fun getMealById(mealId: String): List<MealResponse.Meal>{
+        return try {
+            retrofitApi.lookupMealById(mealId).meals
+        }catch (e: Exception){
+
+            Log.d("MyTAG",e.message.toString())
+            emptyList()
+        }
+    }
     suspend fun getSingleRandomMeal(): List<MealResponse.Meal>{
 
         return try {

@@ -7,10 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.andronest.navigation.Navigation
 import com.andronest.screens.discover.DiscoverScreen
 import com.andronest.screens.home.HomeScreen
@@ -52,13 +54,26 @@ class MainActivity : ComponentActivity() {
                             selectedScreen=selectedScreen
                         )
                     }
-                    composable(Navigation.Discover.route) {
+                    composable(
+                        Navigation.Discover.route,
+                        arguments = listOf(
+                            navArgument("mealId"){
+                                type = NavType.StringType
+                                nullable = true
+                                defaultValue = null
+                            }
+                        )
+                    ) {
+
+                        val mealId = it.arguments?.getString("mealId")
+
                         DiscoverScreen(
-                            navController,
+                            mealId = mealId,
+                            navController = navController,
                             onHome = {
                                 navController.navigate(Navigation.Home.route)
                             },
-                            selectedScreen=selectedScreen,
+                            selectedScreen = selectedScreen,
                         )
                     }
 
