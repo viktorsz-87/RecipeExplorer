@@ -77,6 +77,8 @@ dependencies {
     // GSON
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
+    // Reflection
+    implementation(kotlin("reflect"))
 
 
     // KSP

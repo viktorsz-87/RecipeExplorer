@@ -16,27 +16,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.andronest.model.MealResponse.Meal
-
+import com.andronest.model.MealWithInstructions
+import com.andronest.screens.utils.getIngredientsWithMeasure
+import com.andronest.screens.utils.getInstructions
 
 @Composable
 fun DiscoverScreenItem(
     item: Meal,
     modifier: Modifier = Modifier
 ) {
-
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(6.dp),
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Top
     ) {
 
         AsyncImage(
@@ -65,32 +66,82 @@ fun DiscoverScreenItem(
             }
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Ingredients here
-            Text(
-                text = "Ingredients",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
 
-            item.apply {
-
-                val ingredients = listOf(
-                    strIngredient1, strIngredient2, strIngredient3, strIngredient4,
-                    strIngredient5, strIngredient6, strIngredient7, strIngredient8,
-                    strIngredient9, strIngredient10, strIngredient11, strIngredient12,
-                    strIngredient13, strIngredient14, strIngredient15, strIngredient16,
-                    strIngredient17, strIngredient18, strIngredient19, strIngredient20
-                )
-                    .filter { !it.isNullOrBlank() }
-                    .joinToString(", ")
-
-                Text(
-                    color = Color.Black,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodySmall,
-                    text = ingredients
-                )
-            }
         }
     }
+    // Using reflection api to get these. Check Utils package
+    val instructions = getInstructions(item)
+    val ingredientsWithMeasure = getIngredientsWithMeasure(item)
+
+    val mealWithInstr = MealWithInstructions(
+        instructions = instructions,
+        ingredientsWithMeasure = ingredientsWithMeasure
+    )
+
+    // Instructions
+
+    Spacer(modifier = modifier
+        .fillMaxWidth()
+        .height(20.dp))
+
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        // Ingredients here
+        Text(
+            text = "Instructions",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+    Spacer(modifier = modifier
+        .fillMaxWidth()
+        .height(20.dp))
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        // Ingredients here
+        Text(
+            lineHeight = 20.sp,
+            textAlign = TextAlign.Justify,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            text = instructions ?: "No instructions found",
+            style = MaterialTheme.typography.bodySmall,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
+    Spacer(modifier = modifier
+        .fillMaxWidth()
+        .height(20.dp))
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        // Ingredients here
+        Text(
+            text = "Ingredients",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+    Spacer(modifier = modifier
+        .fillMaxWidth()
+        .height(20.dp))
+    // Ingredients
+    IngredientsList(mealWithInstr)
+
+
 }
