@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +33,8 @@ import com.andronest.ui.theme.ShowDetails
 fun FavoritesScreenItem(
     meal: Meal,
     navController: NavController,
-    onItemClick: ()->Unit,
+    onItemClick: () -> Unit,
+    onItemDelete: (meal: Meal) -> Unit,
     modifier: Modifier = Modifier) {
 
     Row(
@@ -65,10 +70,20 @@ fun FavoritesScreenItem(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                modifier = Modifier.clickable(onClick = { onItemClick() }),
+                modifier = Modifier.clickable(onClick = {
+                    onItemClick()
+                }),
                 color = ShowDetails,
                 text = "Show details",
                 style = MaterialTheme.typography.titleMedium)
+        }
+        Column(
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.fillMaxWidth()) {
+            Icon(
+                modifier = Modifier.requiredSize(30.dp).clickable(onClick = { onItemDelete(meal) }),
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete from favorites")
         }
     }
 }

@@ -16,6 +16,7 @@ import com.andronest.model.Meal
 
 @Composable
 fun DiscoverScreenCard(
+    onAddToFavorites: ()->Unit,
     item: Meal,
     modifier: Modifier = Modifier
 ) {
@@ -28,7 +29,6 @@ fun DiscoverScreenCard(
         border = BorderStroke(2.dp, color = Color.Black)
     ) {
 
-        DiscoverScreenItem(item = item)
+        DiscoverScreenItem(item = item, onAddToFavorites = onAddToFavorites)
     }
-
 }

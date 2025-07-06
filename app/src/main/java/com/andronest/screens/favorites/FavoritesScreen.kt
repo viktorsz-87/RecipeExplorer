@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
+import com.andronest.navigation.Navigation
 import com.andronest.viewmodel.FavoritesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,10 +51,11 @@ fun FavoritesScreen(
 
             items(items = allMeals) { meal ->
 
-                // NOTE: For now empty, no data will be shown on screen!
-
                 // Create meal card
-                FavoritesScreenCard(meal, navController)
+                FavoritesScreenCard(meal, navController, viewModel,
+                    onItemClick = { navController.navigate(Navigation.Discover.createRoute(meal.idMeal)) },
+                    onItemDelete = viewModel::deleteFromDatabase)
+
             }
         }
     }

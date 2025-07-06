@@ -1,6 +1,7 @@
 package com.andronest.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,4 +16,7 @@ interface MealDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMealToDatabase(meal: Meal)
+
+    @Delete
+    suspend fun deleteMealFromDatabase(meal: Meal)
 }

@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
                             onFavorites = {
                                 navController.navigate(Navigation.Favorites.route)
                             },
-                            selectedScreen = selectedScreen,
+                            selectedScreen = selectedScreen
                         )
                     }
                     composable(Navigation.Favorites.route) {

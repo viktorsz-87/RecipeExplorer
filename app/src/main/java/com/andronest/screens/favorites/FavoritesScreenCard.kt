@@ -12,12 +12,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.andronest.model.Meal
-import com.andronest.navigation.Navigation
+import com.andronest.viewmodel.FavoritesViewModel
 
 @Composable
 fun FavoritesScreenCard(
     meal: Meal,
     navController: NavController,
+    viewModel: FavoritesViewModel,
+    onItemClick: () -> Unit,
+    onItemDelete: (meal: Meal) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -32,10 +35,17 @@ fun FavoritesScreenCard(
         border = BorderStroke(2.dp, color = Color.Black)
     ) {
 
-
-            FavoritesScreenItem(meal, navController, onItemClick = {
-                navController.navigate(Navigation.Discover.createRoute(meal.idMeal))
-            })
-
+        FavoritesScreenItem(
+            meal, navController,
+            onItemClick = onItemClick,
+            onItemDelete = onItemDelete)
     }
 }
+
+
+/*onItemClick = {
+       navController.navigate(Navigation.Discover.createRoute(meal.idMeal))
+   },
+   onItemDelete = {
+       viewModel.deleteFromDatabase(meal)
+   })*/

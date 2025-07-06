@@ -23,9 +23,21 @@ class FavoritesViewModel @Inject constructor(
     }
 
     fun fetchAllMealsFromDatabase(){
-
         viewModelScope.launch {
             _allMeals.value = mealRepository.mealDao.getAllMealsFromDatabase()
+        }
+    }
+
+    fun insertIntoDatabase(meal: Meal){
+        viewModelScope.launch {
+            mealRepository.mealDao.insertMealToDatabase(meal)
+        }
+    }
+
+    fun deleteFromDatabase(meal: Meal){
+        viewModelScope.launch {
+            mealRepository.mealDao.deleteMealFromDatabase(meal)
+            fetchAllMealsFromDatabase()
         }
     }
 }

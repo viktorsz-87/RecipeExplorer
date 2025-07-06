@@ -14,53 +14,60 @@ import com.andronest.composables.BottomAppBar
 import com.andronest.model.Meal
 import com.andronest.screens.favorites.FavoritesTopAppBar
 import com.andronest.viewmodel.DiscoverViewModel
+import com.andronest.viewmodel.FavoritesViewModel
 
 @Composable
 fun DiscoverScreen(
     mealId: String? = null,
     navController: NavController,
-    onHome: ()->Unit,
-    onFavorites: ()->Unit,
-    viewModel: DiscoverViewModel = hiltViewModel(),
+    onHome: () -> Unit,
+    onFavorites: () -> Unit,
+    viewModelDiscover: DiscoverViewModel = hiltViewModel(),
+    viewModelFavorites: FavoritesViewModel = hiltViewModel(),
     selectedScreen: String?,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
 
-    val discoverMealState = viewModel.discoverResponse.collectAsState()
-    val discoverMeal:List<Meal> = discoverMealState.value
+    val discoverMealState = viewModelDiscover.discoverResponse.collectAsState()
+    val discoverMeal: List<Meal> = discoverMealState.value
 
-    val discoverFetchMealByIdState = viewModel.fetchMealByIdResponse.collectAsState()
-    val discoverFetchMealById:List<Meal> = discoverFetchMealByIdState.value
+    val discoverFetchMealByIdState = viewModelDiscover.fetchMealByIdResponse.collectAsState()
+    val discoverFetchMealById: List<Meal> = discoverFetchMealByIdState.value
 
     mealId?.let {
-        viewModel.fetchMealById(it)
+        viewModelDiscover.fetchMealById(it)
     }
-
 
     Scaffold(
         topBar = {
             FavoritesTopAppBar(navController)
         },
-        bottomBar ={
+        bottomBar = {
             BottomAppBar(
                 navController,
                 onHome = onHome,
                 onFavorites = onFavorites,
-                selectedScreen = selectedScreen)
+                selectedScreen = selectedScreen
+            )
         }
     ) { paddingValues ->
 
-        LazyColumn(modifier = modifier
-            .padding(paddingValues)
-            .fillMaxSize()){
+        LazyColumn(
+            modifier = modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
 
-            if(mealId!=null) {
-                items(discoverFetchMealById){item->
-                    DiscoverScreenCard(item)
+            mealId?.let {
+                items(discoverFetchMealById) { item ->
+                    DiscoverScreenCard(item = item, onAddToFavorites = {
+                        viewModelFavorites.insertIntoDatabase(item)
+                    })
                 }
-            } else {
-                items(discoverMeal){item->
-                    DiscoverScreenCard(item)
-                }
+            } ?: items(discoverMeal) { item ->
+                DiscoverScreenCard(item = item, onAddToFavorites = {
+                    viewModelFavorites.insertIntoDatabase(item)
+                })
             }
         }
     }
