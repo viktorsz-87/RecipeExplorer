@@ -34,7 +34,7 @@ fun FavoritesScreenItem(
     meal: Meal,
     navController: NavController,
     onItemClick: () -> Unit,
-    onItemDelete: (meal: Meal) -> Unit,
+    onItemDelete: () -> Unit,
     modifier: Modifier = Modifier) {
 
     Row(
@@ -81,7 +81,7 @@ fun FavoritesScreenItem(
             horizontalAlignment = Alignment.End,
             modifier = Modifier.fillMaxWidth()) {
             Icon(
-                modifier = Modifier.requiredSize(30.dp).clickable(onClick = { onItemDelete(meal) }),
+                modifier = Modifier.requiredSize(30.dp).clickable(onClick = { onItemDelete() }),
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Delete from favorites")
         }

@@ -37,7 +37,6 @@ class FavoritesViewModel @Inject constructor(
     fun deleteFromDatabase(meal: Meal){
         viewModelScope.launch {
             mealRepository.mealDao.deleteMealFromDatabase(meal)
-            fetchAllMealsFromDatabase()
         }
     }
 }

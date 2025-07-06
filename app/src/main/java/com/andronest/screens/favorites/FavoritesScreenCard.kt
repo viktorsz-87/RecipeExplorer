@@ -20,7 +20,7 @@ fun FavoritesScreenCard(
     navController: NavController,
     viewModel: FavoritesViewModel,
     onItemClick: () -> Unit,
-    onItemDelete: (meal: Meal) -> Unit,
+    onItemDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -41,11 +41,3 @@ fun FavoritesScreenCard(
             onItemDelete = onItemDelete)
     }
 }
-
-
-/*onItemClick = {
-       navController.navigate(Navigation.Discover.createRoute(meal.idMeal))
-   },
-   onItemDelete = {
-       viewModel.deleteFromDatabase(meal)
-   })*/
