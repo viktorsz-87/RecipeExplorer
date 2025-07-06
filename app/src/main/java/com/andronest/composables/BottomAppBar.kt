@@ -1,6 +1,7 @@
 package com.andronest.composables
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -39,6 +40,11 @@ fun BottomAppBar(
             iconImageVector = Icons.Default.Search,
             title = Navigation.Search.route,
             route = Navigation.Search.route
+        ),
+        NavBarItem(
+            iconImageVector = Icons.Default.Favorite,
+            title = Navigation.Favorites.route,
+            route = Navigation.Favorites.route
         )
     )
 

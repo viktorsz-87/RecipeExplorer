@@ -1,4 +1,4 @@
-package com.andronest.screens.recipe
+package com.andronest.screens.favorites
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,12 +19,11 @@ import com.andronest.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeTopAppBar(
+fun FavoritesTopAppBar(
     navController: NavController,
     modifier: Modifier = Modifier) {
 
     TopAppBar(
-
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")

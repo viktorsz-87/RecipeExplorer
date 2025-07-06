@@ -1,4 +1,4 @@
-package com.andronest.screens.recipe
+package com.andronest.screens.favorites
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,14 +12,13 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeScreen(
-    idMeal: Int,
+fun FavoritesScreen(
     navController: NavController,
     modifier: Modifier = Modifier) {
 
     Scaffold(
         topBar = {
-            RecipeTopAppBar(navController)
+            FavoritesTopAppBar(navController)
         }
     ) { paddingValues ->
 
@@ -27,8 +26,7 @@ fun RecipeScreen(
             .padding(paddingValues)
             .fillMaxSize()){
 
-
-            Text(text = "idMeal test: ${idMeal}")
+            Text(text = "Favorites")
         }
     }
 }

@@ -3,9 +3,7 @@ package com.andronest.navigation
 sealed class Navigation(val route: String) {
 
     object Home: Navigation("Home")
-    object Recipe: Navigation("Recipe/{idMeal}"){
-        fun createRoute(idMeal: Int):String = "Recipe/$idMeal"
-    }
+    object Favorites: Navigation("Favorites")
     object Search: Navigation("Search")
 
     object Discover: Navigation("Discover?mealId={mealId}"){

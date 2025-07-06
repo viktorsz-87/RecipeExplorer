@@ -15,8 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andronest.navigation.Navigation
 import com.andronest.screens.discover.DiscoverScreen
+import com.andronest.screens.favorites.FavoritesScreen
 import com.andronest.screens.home.HomeScreen
-import com.andronest.screens.recipe.RecipeScreen
 import com.andronest.ui.theme.RecipeExplorerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,16 +76,8 @@ class MainActivity : ComponentActivity() {
                             selectedScreen = selectedScreen,
                         )
                     }
-
-                    composable(Navigation.Recipe.route) {
-
-                        val id: Int? = it.arguments?.getInt("idMeal")
-                        if (id != null) {
-                            RecipeScreen(
-                                navController = navController,
-                                idMeal = id
-                            )
-                        }
+                    composable(Navigation.Favorites.route) {
+                        FavoritesScreen(navController = navController)
                     }
                 }
             }

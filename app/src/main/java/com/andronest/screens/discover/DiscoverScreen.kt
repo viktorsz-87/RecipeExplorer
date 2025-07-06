@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
 import com.andronest.model.MealResponse.Meal
-import com.andronest.screens.recipe.RecipeTopAppBar
+import com.andronest.screens.favorites.FavoritesTopAppBar
 import com.andronest.viewmodel.DiscoverViewModel
 
 @Composable
@@ -37,7 +37,7 @@ fun DiscoverScreen(
 
     Scaffold(
         topBar = {
-            RecipeTopAppBar(navController)
+            FavoritesTopAppBar(navController)
         },
         bottomBar ={
             BottomAppBar(
