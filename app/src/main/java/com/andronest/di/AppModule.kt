@@ -1,11 +1,15 @@
 package com.andronest.di
 
+import android.content.Context
+import com.andronest.database.MealDao
+import com.andronest.database.MealDatabase
 import com.andronest.repository.MealRepository
 import com.andronest.retrofit.Retrofit
 import com.andronest.retrofit.RetrofitApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -16,13 +20,28 @@ object AppModule{
 
     @Provides
     @Singleton
-    fun provideRetrofitApiServer(): RetrofitApi {
+    fun provideRetrofitApiService(): RetrofitApi {
         return Retrofit.api
     }
 
     @Provides
     @Singleton
-    fun provieRecipeRepository(retrofitApi: RetrofitApi): MealRepository{
-        return MealRepository(retrofitApi)
+    fun provideMealRepository(retrofitApi: RetrofitApi,
+                              mealDao: MealDao): MealRepository{
+
+        return MealRepository(retrofitApi, mealDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideMealDatabase(@ApplicationContext context: Context): MealDatabase{
+        return MealDatabase.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMealDao(mealDatabase: MealDatabase): MealDao{
+        return mealDatabase.mealDao
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.andronest.screens.home
+package com.andronest.screens.favorites
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +20,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.andronest.model.Meal
 import com.andronest.ui.theme.ShowDetails
 
 @Composable
-fun HomeScreenItem(
-    item: Meal,
-    onClick: () -> Unit = {},
+fun FavoritesScreenItem(
+    meal: Meal,
+    navController: NavController,
+    onItemClick: ()->Unit,
     modifier: Modifier = Modifier) {
 
     Row(
@@ -39,8 +41,8 @@ fun HomeScreenItem(
     ) {
 
         AsyncImage(
-            model = item.mealThumb,
-            contentDescription = item.meal,
+            model = meal.mealThumb,
+            contentDescription = meal.meal,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(150.dp)
@@ -49,7 +51,7 @@ fun HomeScreenItem(
         Spacer(modifier = modifier.width(16.dp))
 
         Column(){
-            item.meal?.let {
+            meal.meal?.let {
                 Text(text = it,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold)
@@ -57,13 +59,13 @@ fun HomeScreenItem(
 
             Spacer(modifier= Modifier.height(4.dp))
 
-            item.category?.let {category->
+            meal.category?.let {category->
                 Text(text = "Category: $category", style= MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                modifier = Modifier.clickable(onClick = { onClick() }),
+                modifier = Modifier.clickable(onClick = { onItemClick() }),
                 color = ShowDetails,
                 text = "Show details",
                 style = MaterialTheme.typography.titleMedium)

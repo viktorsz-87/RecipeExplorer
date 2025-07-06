@@ -21,6 +21,7 @@ fun BottomAppBar(
     navController: NavController,
     onDiscover: () -> Unit = {},
     onHome: () -> Unit = {},
+    onFavorites: () -> Unit = {},
     selectedScreen: String?,
     modifier: Modifier = Modifier
 ) {
@@ -65,6 +66,9 @@ fun BottomAppBar(
                             }
                             Navigation.Discover.route -> {
                                 onDiscover()
+                            }
+                            Navigation.Favorites.route->{
+                                onFavorites()
                             }
                         }
                     }

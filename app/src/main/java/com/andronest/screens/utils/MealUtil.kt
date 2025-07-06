@@ -7,13 +7,13 @@ fun getIngredientsWithMeasure(obj: Any): List<Pair<String,String>> {
     return (1..20).mapNotNull { i ->
 
         val ingredient = obj::class.memberProperties
-            .firstOrNull { it.name == "strIngredient$i" }
+            .firstOrNull { it.name == "ingredient$i" }
             ?.let {
                 it.call(obj) as? String
             }?.takeIf { it.isNotBlank() } ?: ""
 
         val measure = obj::class.memberProperties
-            .firstOrNull{it.name == "strMeasure$i"}
+            .firstOrNull{it.name == "measure$i"}
             ?.let {
                 it.call(obj) as? String
             }?.takeIf { it.isNotBlank() } ?: ""
@@ -25,7 +25,7 @@ fun getIngredientsWithMeasure(obj: Any): List<Pair<String,String>> {
 fun getInstructions(obj: Any): String? {
 
     return obj::class.memberProperties.firstOrNull {
-        it.name == "strInstructions"
+        it.name == "instructions"
     }?.let {
         it.call(obj) as? String
     }?.takeIf {

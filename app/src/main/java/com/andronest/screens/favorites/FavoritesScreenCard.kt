@@ -1,4 +1,4 @@
-package com.andronest.screens.home
+package com.andronest.screens.favorites
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,13 +14,13 @@ import androidx.navigation.NavController
 import com.andronest.model.Meal
 import com.andronest.navigation.Navigation
 
-
 @Composable
-fun HomeScreenItemCard(
+fun FavoritesScreenCard(
+    meal: Meal,
     navController: NavController,
-    item: Meal,
     modifier: Modifier = Modifier
 ) {
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -33,11 +33,9 @@ fun HomeScreenItemCard(
     ) {
 
 
-        HomeScreenItem(
-            item = item,
-            modifier = modifier,
-            onClick = { navController.navigate(Navigation.Discover.createRoute(item.idMeal)) },
-        )
+            FavoritesScreenItem(meal, navController, onItemClick = {
+                navController.navigate(Navigation.Discover.createRoute(meal.idMeal))
+            })
 
     }
 }

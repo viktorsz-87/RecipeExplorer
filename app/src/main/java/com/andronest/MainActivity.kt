@@ -51,7 +51,10 @@ class MainActivity : ComponentActivity() {
                             onDiscover = {
                                 navController.navigate(Navigation.Discover.route)
                             },
-                            selectedScreen=selectedScreen
+                            selectedScreen=selectedScreen,
+                            onFavorites = {
+                                navController.navigate(Navigation.Favorites.route)
+                            }
                         )
                     }
                     composable(
@@ -73,11 +76,23 @@ class MainActivity : ComponentActivity() {
                             onHome = {
                                 navController.navigate(Navigation.Home.route)
                             },
+                            onFavorites = {
+                                navController.navigate(Navigation.Favorites.route)
+                            },
                             selectedScreen = selectedScreen,
                         )
                     }
                     composable(Navigation.Favorites.route) {
-                        FavoritesScreen(navController = navController)
+                        FavoritesScreen(
+                            onHome = {
+                                navController.navigate(Navigation.Home.route)
+                            },
+                            onDiscover = {
+                                navController.navigate(Navigation.Discover.route)
+                            },
+                            selectedScreen = selectedScreen,
+                            navController = navController
+                        )
                     }
                 }
             }

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
-import com.andronest.model.MealResponse.Meal
+import com.andronest.model.Meal
 import com.andronest.viewmodel.HomeViewModel
 
 
@@ -22,6 +22,7 @@ import com.andronest.viewmodel.HomeViewModel
 fun HomeScreen(
     navController: NavController,
     onDiscover: () -> Unit,
+    onFavorites: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     selectedScreen: String?,
     modifier: Modifier = Modifier
@@ -36,6 +37,7 @@ fun HomeScreen(
             BottomAppBar(
                 navController,
                 onDiscover = onDiscover,
+                onFavorites = onFavorites,
                 selectedScreen = selectedScreen
             )
         }) { paddingValues ->

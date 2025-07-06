@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.andronest.model.MealResponse.Meal
+import com.andronest.model.Meal
 import com.andronest.model.MealWithInstructions
 import com.andronest.screens.utils.getIngredientsWithMeasure
 import com.andronest.screens.utils.getInstructions
@@ -40,8 +40,8 @@ fun DiscoverScreenItem(
         verticalAlignment = Alignment.Top
     ) {
         AsyncImage(
-            model = item.strMealThumb,
-            contentDescription = item.strMeal,
+            model = item.mealThumb,
+            contentDescription = item.meal,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
@@ -62,7 +62,7 @@ fun DiscoverScreenItem(
             modifier=modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top) {
-            item.strMeal?.let {
+            item.meal?.let {
                 Text(
                     text = it,
                     style = MaterialTheme.typography.titleMedium,
@@ -72,7 +72,7 @@ fun DiscoverScreenItem(
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            item.strCategory?.let { category ->
+            item.category?.let { category ->
                 Text(text = "Category: $category", style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(12.dp))

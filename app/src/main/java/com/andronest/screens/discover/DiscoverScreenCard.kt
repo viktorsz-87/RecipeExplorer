@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.andronest.model.MealResponse
+import com.andronest.model.Meal
 
 
 @Composable
 fun DiscoverScreenCard(
-    item: MealResponse.Meal,
+    item: Meal,
     modifier: Modifier = Modifier
 ) {
     Card(

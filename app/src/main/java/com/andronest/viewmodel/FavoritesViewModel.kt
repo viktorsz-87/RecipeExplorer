@@ -6,27 +6,26 @@ import com.andronest.model.Meal
 import com.andronest.repository.MealRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val repository: MealRepository
-): ViewModel() {
+class FavoritesViewModel @Inject constructor(
+    private val mealRepository: MealRepository
+) : ViewModel() {
 
-    private var _mealsResponse = MutableStateFlow<List<Meal>>(emptyList())
-    var mealsResponse: StateFlow<List<Meal>> = _mealsResponse.asStateFlow()
+    private var _allMeals = MutableStateFlow<List<Meal>>(emptyList())
+    var allMeals = _allMeals.asStateFlow()
 
     init {
-        fetchMealData()
+        fetchAllMealsFromDatabase()
     }
 
-    private fun fetchMealData() {
+    fun fetchAllMealsFromDatabase(){
+
         viewModelScope.launch {
-            _mealsResponse.value = repository.getMealsByFirstLetter("a")
+            _allMeals.value = mealRepository.mealDao.getAllMealsFromDatabase()
         }
     }
-
 }
