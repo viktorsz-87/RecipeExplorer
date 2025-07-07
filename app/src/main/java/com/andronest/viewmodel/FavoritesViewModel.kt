@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.andronest.model.Meal
 import com.andronest.repository.MealRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,5 +39,27 @@ class FavoritesViewModel @Inject constructor(
         viewModelScope.launch {
             mealRepository.mealDao.deleteMealFromDatabase(meal)
         }
+    }
+
+    private val _snackBarState = MutableStateFlow<SnackBarState>(SnackBarState.Hidden)
+    val snackBarState = _snackBarState.asStateFlow()
+
+    sealed class SnackBarState(){
+        object Hidden: SnackBarState()
+        data class Visible(val message: String): SnackBarState()
+    }
+
+    fun showSnackBar(msg: String){
+
+        _snackBarState.value = SnackBarState.Visible(msg)
+
+        viewModelScope.launch {
+            delay(3000)
+            _snackBarState.value = SnackBarState.Hidden
+        }
+    }
+
+    fun hideSnackBar(){
+        _snackBarState.value = SnackBarState.Hidden
     }
 }
