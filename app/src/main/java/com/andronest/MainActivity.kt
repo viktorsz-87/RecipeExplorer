@@ -17,6 +17,7 @@ import com.andronest.navigation.Navigation
 import com.andronest.screens.discover.DiscoverScreen
 import com.andronest.screens.favorites.FavoritesScreen
 import com.andronest.screens.home.HomeScreen
+import com.andronest.screens.search.SearchScreen
 import com.andronest.ui.theme.RecipeExplorerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,16 +46,34 @@ class MainActivity : ComponentActivity() {
                     startDestination = Navigation.Home.route
                 ) {
 
+                    composable(Navigation.Search.route){
+                        SearchScreen(
+                            selectedScreen = selectedScreen,
+                            navController = navController,
+                            onHome = {
+                                navController.navigate(Navigation.Home.route)
+                            },
+                            onFavorites = {
+                                navController.navigate(Navigation.Favorites.route)
+                            },
+                            onDiscover = {
+                                navController.navigate(Navigation.Discover.route)
+                            }
+                        )
+                    }
                     composable(Navigation.Home.route) {
                         HomeScreen(
-                            navController,
+                            navController=navController,
+                            selectedScreen=selectedScreen,
                             onDiscover = {
                                 navController.navigate(Navigation.Discover.route)
                             },
-                            selectedScreen=selectedScreen,
                             onFavorites = {
                                 navController.navigate(Navigation.Favorites.route)
-                            }
+                            },
+                            onSearch = {
+                                navController.navigate(Navigation.Search.route)
+                            },
                         )
                     }
                     composable(
@@ -73,25 +92,31 @@ class MainActivity : ComponentActivity() {
                         DiscoverScreen(
                             mealId = mealId,
                             navController = navController,
+                            selectedScreen = selectedScreen,
                             onHome = {
                                 navController.navigate(Navigation.Home.route)
                             },
                             onFavorites = {
                                 navController.navigate(Navigation.Favorites.route)
                             },
-                            selectedScreen = selectedScreen
+                            onSearch = {
+                                navController.navigate(Navigation.Search.route)
+                            }
                         )
                     }
                     composable(Navigation.Favorites.route) {
                         FavoritesScreen(
+                            selectedScreen = selectedScreen,
+                            navController = navController,
                             onHome = {
                                 navController.navigate(Navigation.Home.route)
                             },
                             onDiscover = {
                                 navController.navigate(Navigation.Discover.route)
                             },
-                            selectedScreen = selectedScreen,
-                            navController = navController
+                            onSearch = {
+                                navController.navigate(Navigation.Search.route)
+                            }
                         )
                     }
                 }

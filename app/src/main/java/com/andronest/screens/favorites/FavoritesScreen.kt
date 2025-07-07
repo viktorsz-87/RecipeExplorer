@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
 import com.andronest.composables.ConfirmSnackbar
+import com.andronest.composables.CustomTopAppBar
 import com.andronest.navigation.Navigation
 import com.andronest.viewmodel.FavoritesViewModel
 
@@ -22,6 +23,7 @@ import com.andronest.viewmodel.FavoritesViewModel
 fun FavoritesScreen(
     onDiscover: () -> Unit,
     onHome: () -> Unit,
+    onSearch: () -> Unit,
     selectedScreen: String?,
     navController: NavController,
     viewModel: FavoritesViewModel = hiltViewModel(),
@@ -46,13 +48,14 @@ fun FavoritesScreen(
             }
         },
         topBar = {
-            FavoritesTopAppBar(navController)
+            CustomTopAppBar(navController)
         },
         bottomBar = {
             BottomAppBar(
                 navController = navController,
                 onDiscover = onDiscover,
                 onHome = onHome,
+                onSearch = onSearch,
                 selectedScreen = selectedScreen
             )
         }

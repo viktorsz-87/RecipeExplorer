@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
+import com.andronest.composables.CustomTopAppBar
 import com.andronest.model.Meal
-import com.andronest.screens.favorites.FavoritesTopAppBar
 import com.andronest.viewmodel.DiscoverViewModel
 import com.andronest.viewmodel.FavoritesViewModel
 
@@ -22,6 +22,7 @@ fun DiscoverScreen(
     navController: NavController,
     onHome: () -> Unit,
     onFavorites: () -> Unit,
+    onSearch: () -> Unit,
     viewModelDiscover: DiscoverViewModel = hiltViewModel(),
     viewModelFavorites: FavoritesViewModel = hiltViewModel(),
     selectedScreen: String?,
@@ -40,13 +41,14 @@ fun DiscoverScreen(
 
     Scaffold(
         topBar = {
-            FavoritesTopAppBar(navController)
+            CustomTopAppBar(navController)
         },
         bottomBar = {
             BottomAppBar(
                 navController,
                 onHome = onHome,
                 onFavorites = onFavorites,
+                onSearch = onSearch,
                 selectedScreen = selectedScreen
             )
         }

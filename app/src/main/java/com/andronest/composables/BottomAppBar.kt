@@ -22,6 +22,7 @@ fun BottomAppBar(
     onDiscover: () -> Unit = {},
     onHome: () -> Unit = {},
     onFavorites: () -> Unit = {},
+    onSearch: () -> Unit = {},
     selectedScreen: String?,
     modifier: Modifier = Modifier
 ) {
@@ -69,6 +70,9 @@ fun BottomAppBar(
                             }
                             Navigation.Favorites.route->{
                                 onFavorites()
+                            }
+                            Navigation.Search.route->{
+                                onSearch()
                             }
                         }
                     }

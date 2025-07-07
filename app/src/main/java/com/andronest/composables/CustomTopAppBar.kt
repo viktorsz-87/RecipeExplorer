@@ -1,4 +1,4 @@
-package com.andronest.screens.favorites
+package com.andronest.composables
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,7 +19,7 @@ import com.andronest.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoritesTopAppBar(
+fun CustomTopAppBar(
     navController: NavController,
     modifier: Modifier = Modifier) {
 
