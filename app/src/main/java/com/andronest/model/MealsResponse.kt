@@ -39,6 +39,10 @@ data class Meal(
     @ColumnInfo(name = "image_source")
     val imageSource: String? = null,
 
+    @SerializedName("strIngredient")
+    @ColumnInfo(name = "ingredient")
+    val ingredient: String? = null,
+
     @SerializedName("strIngredient1")
     @ColumnInfo(name = "ingredient1")
     val ingredient1: String? = null,

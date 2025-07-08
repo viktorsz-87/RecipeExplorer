@@ -1,5 +1,8 @@
 package com.andronest.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andronest.model.Meal
@@ -14,19 +17,37 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: MealRepository
-): ViewModel() {
+) : ViewModel() {
 
     private var _mealsResponse = MutableStateFlow<List<Meal>>(emptyList())
     var mealsResponse: StateFlow<List<Meal>> = _mealsResponse.asStateFlow()
 
     init {
-        fetchMealData()
+        getMealByName("Beef")
     }
 
-    private fun fetchMealData() {
+    var searchText by mutableStateOf("")
+
+    var results by mutableStateOf<List<Meal>>(emptyList())
+
+    fun searchMealByIngredient(ingredient: String) {
+        if (ingredient.length < 3) {
+            results = emptyList()
+            return
+        }
+
         viewModelScope.launch {
-            _mealsResponse.value = repository.getMealsByFirstLetter("a")
+            try {
+                results = repository.getMealByMainIngredient(ingredient)
+            } catch (e: Exception) {
+                results = emptyList()
+            }
         }
     }
 
+    fun getMealByName(mealName: String) {
+        viewModelScope.launch {
+            _mealsResponse.value = repository.getMealByName(mealName)
+        }
+    }
 }

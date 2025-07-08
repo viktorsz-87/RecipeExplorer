@@ -2,7 +2,7 @@ package com.andronest.screens.utils
 
 import kotlin.reflect.full.memberProperties
 
-fun getIngredientsWithMeasure(obj: Any): List<Pair<String,String>> {
+fun getIngredientsWithMeasure(obj: Any): List<Pair<String, String>> {
 
     return (1..20).mapNotNull { i ->
 
@@ -13,7 +13,7 @@ fun getIngredientsWithMeasure(obj: Any): List<Pair<String,String>> {
             }?.takeIf { it.isNotBlank() } ?: ""
 
         val measure = obj::class.memberProperties
-            .firstOrNull{it.name == "measure$i"}
+            .firstOrNull { it.name == "measure$i" }
             ?.let {
                 it.call(obj) as? String
             }?.takeIf { it.isNotBlank() } ?: ""
@@ -31,5 +31,18 @@ fun getInstructions(obj: Any): String? {
     }?.takeIf {
         it.isNotBlank()
     }
+
+}
+
+
+fun getIngredient(obj: Any): String {
+
+    return obj::class.memberProperties.firstOrNull {
+        it.name == "strIngredient"
+    }?.let {
+        it.call(obj) as String
+    }?.takeIf {
+        it.isNotBlank()
+    } ?: ""
 
 }

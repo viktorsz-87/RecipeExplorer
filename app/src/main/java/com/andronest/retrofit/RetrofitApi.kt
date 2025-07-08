@@ -13,8 +13,17 @@ interface RetrofitApi{
     @GET("lookup.php")
     suspend fun lookupMealById(@Query("i") id:String): MealResponse
 
+    @GET("filter.php")
+    suspend fun filterByMainIngredient(@Query("i") ingredient: String): MealResponse
+
+    @GET("list.php") // Should be used with filterByMainIngredient
+    suspend fun getAllIngredients(@Query("i") list:String="list"): MealResponse
+
     @GET("search.php")
-    suspend fun searchMealsByFirstLetter(@Query("f") firstLetter: String): MealResponse
+    suspend fun searchMealByFirstLetter(@Query("f") firstLetter: String): MealResponse
+
+    @GET("search.php")
+    suspend fun searchMealByName(@Query("s") mealName: String): MealResponse
 
     @GET("random.php")
     suspend fun getSingleRandomMeal(): MealResponse

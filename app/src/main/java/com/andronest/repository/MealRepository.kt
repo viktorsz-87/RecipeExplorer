@@ -12,6 +12,24 @@ class MealRepository @Inject constructor(
     private val retrofitApi: RetrofitApi,
     val mealDao: MealDao) {
 
+    suspend fun getMealByMainIngredient(ingredient: String): List<Meal>{
+        return try {
+            retrofitApi.filterByMainIngredient(ingredient).meals
+        }catch (e: Exception){
+            Log.d("MyTAG",e.message.toString())
+            emptyList()
+        }
+    }
+
+    suspend fun getAllIngredients(): List<Meal>{
+        return try {
+            retrofitApi.getAllIngredients().meals
+        }catch (e: Exception){
+            Log.d("MyTAG",e.message.toString())
+            emptyList()
+        }
+    }
+
     suspend fun getMealById(mealId: String): List<Meal>{
         return try {
             retrofitApi.lookupMealById(mealId).meals
@@ -30,13 +48,23 @@ class MealRepository @Inject constructor(
             emptyList()
         }
     }
-    suspend fun getMealsByFirstLetter(letter: String):List<Meal>{
+    suspend fun getMealByFirstLetter(letter: String):List<Meal>{
 
         return try {
-            retrofitApi.searchMealsByFirstLetter(letter).meals
+            retrofitApi.searchMealByFirstLetter(letter).meals
         } catch (e: Exception){
             Log.d("MyTAG",e.message.toString())
             emptyList()
         }
     }
+    suspend fun getMealByName(mealName: String):List<Meal>{
+
+        return try {
+            retrofitApi.searchMealByName(mealName).meals
+        } catch (e: Exception){
+            Log.d("MyTAG",e.message.toString())
+            emptyList()
+        }
+    }
+
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.andronest.model.Meal
 
 
-@Database(entities = [Meal::class], version = 1)
+@Database(entities = [Meal::class], version = 2)
 abstract class MealDatabase : RoomDatabase() {
 
     abstract val mealDao: MealDao
@@ -29,7 +29,7 @@ abstract class MealDatabase : RoomDatabase() {
                 context = context,
                 klass = MealDatabase::class.java,
                 name = "meals_db"
-            ).build()
+            ).fallbackToDestructiveMigration(true).build()
         }
     }
 }
