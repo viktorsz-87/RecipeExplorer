@@ -12,18 +12,18 @@ class MealRepository @Inject constructor(
     private val retrofitApi: RetrofitApi,
     val mealDao: MealDao) {
 
-    suspend fun getMealByMainIngredient(ingredient: String): List<Meal>{
+    suspend fun getMealByCategory(mealCategory: String): List<Meal>{
         return try {
-            retrofitApi.filterByMainIngredient(ingredient).meals
+            retrofitApi.filterByCategory(mealCategory).meals
         }catch (e: Exception){
             Log.d("MyTAG",e.message.toString())
             emptyList()
         }
     }
 
-    suspend fun getAllIngredients(): List<Meal>{
+    suspend fun getMealByMainIngredient(ingredient: String): List<Meal>{
         return try {
-            retrofitApi.getAllIngredients().meals
+            retrofitApi.filterByMainIngredient(ingredient).meals
         }catch (e: Exception){
             Log.d("MyTAG",e.message.toString())
             emptyList()

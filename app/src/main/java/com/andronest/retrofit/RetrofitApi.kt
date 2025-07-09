@@ -16,8 +16,8 @@ interface RetrofitApi{
     @GET("filter.php")
     suspend fun filterByMainIngredient(@Query("i") ingredient: String): MealResponse
 
-    @GET("list.php") // Should be used with filterByMainIngredient
-    suspend fun getAllIngredients(@Query("i") list:String="list"): MealResponse
+    @GET("filter.php")
+    suspend fun filterByCategory(@Query("c") category: String): MealResponse
 
     @GET("search.php")
     suspend fun searchMealByFirstLetter(@Query("f") firstLetter: String): MealResponse

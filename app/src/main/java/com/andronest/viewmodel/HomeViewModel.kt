@@ -22,13 +22,16 @@ class HomeViewModel @Inject constructor(
     private var _mealsResponse = MutableStateFlow<List<Meal>>(emptyList())
     var mealsResponse: StateFlow<List<Meal>> = _mealsResponse.asStateFlow()
 
+
     init {
         getMealByName("Beef")
+
     }
 
     var searchText by mutableStateOf("")
 
     var results by mutableStateOf<List<Meal>>(emptyList())
+
 
     fun searchMealByIngredient(ingredient: String) {
         if (ingredient.length < 3) {
