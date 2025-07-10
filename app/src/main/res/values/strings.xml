@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecipeExplorer</string>
+    <string name="loading">Loading...</string>
+    <string name="no_connection">No connection</string>
 </resources>
