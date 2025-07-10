@@ -22,8 +22,8 @@ class SearchViewModel @Inject constructor(
     private val repository: MealRepository
 ): ViewModel() {
 
-    val categories = mutableStateListOf("Seafood", "Pasta", "Dessert", "Beef", "Vegan", "Chicken")
-
+    val categories = mutableStateListOf("NoFilter","Seafood", "Pasta", "Dessert", "Beef", "Vegan", "Chicken")
+    val modes = mutableStateListOf("Online","Offline")
     private val _meals = MutableStateFlow<List<Meal>>(emptyList())
     val meals = _meals.asStateFlow()
 
@@ -36,7 +36,29 @@ class SearchViewModel @Inject constructor(
     private val _selectedCategory = mutableStateOf("")
     val selectedCategory: String by _selectedCategory
 
+    private val _selectedMode = mutableStateOf("")
+    val selectedMode: String by _selectedMode
+
     private var searchJob: Job? = null
+
+    init {
+        _selectedMode.value = modes.first()
+        _selectedCategory.value = categories.first()
+    }
+
+    fun fetchAllMealsFromDatabase(){
+        viewModelScope.launch {
+           _meals.value = repository.mealDao.getAllMealsFromDatabase()
+        }
+    }
+
+    fun isFilterEnabled(): Boolean{
+        return categories.contains(_selectedCategory.value) && _selectedCategory.value !="NoFilter"
+    }
+
+    fun updateMode(mode: String){
+        _selectedMode.value = mode
+    }
 
     fun updateCategory(category: String?){
         _selectedCategory.value = category ?: ""
@@ -61,6 +83,13 @@ class SearchViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class)
     fun searchMealByName(query: String){
+
+        if(_selectedMode.value=="Offline"){
+            _searchText.value = query
+            searchJob?.cancel()
+            fetchAllMealsFromDatabase()
+            return
+        }
 
         _searchText.value = query
         searchJob?.cancel()

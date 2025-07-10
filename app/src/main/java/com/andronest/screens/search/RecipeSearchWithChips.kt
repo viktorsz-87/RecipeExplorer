@@ -22,9 +22,12 @@ fun RecipeSearchWithChips(
     searchText: String,
     onSearchChange: (String) -> Unit,
     categories: List<String>,
+    modes: List<String>,
     selectedCategory: String?,
     onCategorySelected: (String?) -> Unit,
     onChipClicked: (String) -> Unit,
+    onSelectedMode: String,
+    onModeSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -49,13 +52,6 @@ fun RecipeSearchWithChips(
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            item {
-                FilterChip(
-                    selected = selectedCategory == null,
-                    onClick = { onCategorySelected(null) },
-                    label = { Text("No Filter") })
-            }
-
             items(categories.size) { index ->
                 FilterChip(
                     selected = selectedCategory == categories[index],
@@ -66,6 +62,26 @@ fun RecipeSearchWithChips(
                     label = { Text(categories[index]) }
                 )
             }
+        }
+
+        Spacer(Modifier.height(6.dp))
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ){
+
+            items(modes.size){ index->
+                FilterChip(
+                    selected = modes[index] == onSelectedMode,
+                    onClick = {
+                        onModeSelected(modes[index])
+                        onSearchChange(searchText)
+                    },
+                    label = { Text(modes[index]) }
+                )
+            }
+
         }
     }
 }
