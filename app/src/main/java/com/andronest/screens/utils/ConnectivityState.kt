@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 
 
 @Composable
-fun ConnectivityState(): MutableState<ConnectivityStatus> {
+fun rememberConnectivityState(): MutableState<ConnectivityStatus> {
 
     val status = remember { mutableStateOf<ConnectivityStatus>(ConnectivityStatus.Loading) }
     val context = LocalContext.current
@@ -34,21 +34,23 @@ fun ConnectivityState(): MutableState<ConnectivityStatus> {
             super.onUnavailable()
             status.value = ConnectivityStatus.Error("No Connection!")
         }
+
+        override fun onCapabilitiesChanged(
+            network: Network,
+            networkCapabilities: NetworkCapabilities
+        ) {
+            val capabilities = connManger.getNetworkCapabilities(connManger.activeNetwork)
+
+                status.value = when{
+
+                    capabilities == null -> ConnectivityStatus.Error("No active network")
+                    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> ConnectivityStatus.Success("Connected")
+                    else -> ConnectivityStatus.Error("No internet access")
+                }
+
+            }
     }
-
-   val capabilities = connManger.getNetworkCapabilities(connManger.activeNetwork)
-
-    if(capabilities!=null) {
-
-        status.value = when{
-
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> ConnectivityStatus.Success("Connected")
-            else -> ConnectivityStatus.Error("No internet access")
-        }
-
-    } else {
-        status.value = ConnectivityStatus.Error("No active network")
-    }
+    connManger.registerDefaultNetworkCallback(callback)
 
     return status
 }

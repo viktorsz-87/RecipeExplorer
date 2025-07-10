@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andronest.model.Meal
 import com.andronest.repository.MealRepository
-import com.andronest.screens.utils.ConnectivityStatus
 import com.andronest.screens.utils.MealConstants
 import com.andronest.screens.utils.MealConstants.OFFLINE_MODE
 import com.andronest.screens.utils.MealConstants.ONLINE_MODE
@@ -24,9 +23,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repository: MealRepository
 ): ViewModel() {
-
-    private val _networkStatus: MutableStateFlow<ConnectivityStatus> = MutableStateFlow(ConnectivityStatus.Loading)
-    val networkStatus = _networkStatus.asStateFlow()
 
     val categories = MealConstants.CATEGORIES
 
@@ -78,7 +74,6 @@ class SearchViewModel @Inject constructor(
     fun updateCategory(category: String?){
         _selectedCategory.value = category ?: ""
     }
-
 
     @OptIn(FlowPreview::class)
     fun searchMealsByCategory(mealCategory: String){

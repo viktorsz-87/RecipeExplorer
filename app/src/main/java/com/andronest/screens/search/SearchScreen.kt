@@ -15,6 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
 import com.andronest.composables.CustomTopAppBar
+import com.andronest.screens.utils.rememberConnectivityState
 import com.andronest.viewmodel.SearchViewModel
 
 @Composable
@@ -33,9 +34,9 @@ fun SearchScreen(
 
     val meals by viewModel.meals.collectAsStateWithLifecycle()
     val mealsByCategories by viewModel.mealsByCategory.collectAsStateWithLifecycle()
-    val networkStatus by viewModel.networkStatus.collectAsStateWithLifecycle()
-
     val selectedMode = viewModel.selectedMode
+
+    val networkState = rememberConnectivityState().value
 
     Scaffold(
         topBar = {
@@ -72,7 +73,7 @@ fun SearchScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            NetworkStatusBanner(status = networkStatus)
+            NetworkStatusBanner(status = networkState)
 
             MealsListContent(
                 isFilteringEnabled = viewModel.isFilterEnabled,
