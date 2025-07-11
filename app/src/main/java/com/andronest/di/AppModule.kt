@@ -1,6 +1,7 @@
 package com.andronest.di
 
 import android.content.Context
+import android.net.ConnectivityManager
 import com.andronest.database.MealDao
 import com.andronest.database.MealDatabase
 import com.andronest.repository.MealRepository
@@ -44,4 +45,10 @@ object AppModule{
         return mealDatabase.mealDao
     }
 
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager{
+
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 }

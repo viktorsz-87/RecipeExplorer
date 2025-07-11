@@ -15,7 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.andronest.composables.BottomAppBar
 import com.andronest.composables.CustomTopAppBar
-import com.andronest.screens.utils.rememberConnectivityState
+import com.andronest.viewmodel.NetworkViewModel
 import com.andronest.viewmodel.SearchViewModel
 
 @Composable
@@ -25,18 +25,19 @@ fun SearchScreen(
     onDiscover: () -> Unit,
     navController: NavController,
     selectedScreen: String?,
-    viewModel: SearchViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel = hiltViewModel(),
+    networkViewModel: NetworkViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
 
     /* collectAsStateWithLifecycle: Lifecycle aware,
        runs only in fireground and not when screen is not visible.*/
 
-    val meals by viewModel.meals.collectAsStateWithLifecycle()
-    val mealsByCategories by viewModel.mealsByCategory.collectAsStateWithLifecycle()
-    val selectedMode = viewModel.selectedMode
+    val meals by searchViewModel.meals.collectAsStateWithLifecycle()
+    val mealsByCategories by searchViewModel.mealsByCategory.collectAsStateWithLifecycle()
+    val selectedMode = searchViewModel.selectedMode
 
-    val networkState = rememberConnectivityState().value
+    val networkState by networkViewModel.status.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -60,29 +61,29 @@ fun SearchScreen(
         ) {
 
             RecipeSearchWithChips(
-                searchText = viewModel.searchText,
-                onSearchChange = viewModel::searchMealByName,
-                categories = viewModel.categories,
-                selectedCategory = viewModel.selectedCategory,
-                onCategorySelected = viewModel::updateCategory,
-                onChipClicked = viewModel::searchMealsByCategory,
-                onSelectedMode = viewModel.selectedMode,
-                onModeSelected = viewModel::updateMode,
-                modes = viewModel.modes
+                searchText = searchViewModel.searchText,
+                onSearchChange = searchViewModel::searchMealByName,
+                categories = searchViewModel.categories,
+                selectedCategory = searchViewModel.selectedCategory,
+                onCategorySelected = searchViewModel::updateCategory,
+                onChipClicked = searchViewModel::searchMealsByCategory,
+                onSelectedMode = searchViewModel.selectedMode,
+                onModeSelected = searchViewModel::updateMode,
+                modes = searchViewModel.modes
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            NetworkStatusBanner(status = networkState)
+            NetworkStatusBanner(networkViewModel = networkViewModel)
 
             MealsListContent(
-                isFilteringEnabled = viewModel.isFilterEnabled,
+                isFilteringEnabled = searchViewModel.isFilterEnabled,
                 selectedMode = selectedMode,
                 meals = meals,
                 mealsByCategories = mealsByCategories,
                 navController = navController,
                 modifier = modifier,
-                viewModel = viewModel
+                viewModel = searchViewModel
             )
         }
     }
