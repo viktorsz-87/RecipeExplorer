@@ -1,6 +1,5 @@
 package com.andronest.screens.home
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -109,19 +108,6 @@ fun HomeScreen(
 }
 
 @Composable
-private fun LoadingState() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CircularProgressIndicator()
-        Spacer(Modifier.height(16.dp))
-        Text(stringResource(R.string.loading_meals))
-    }
-}
-
-@Composable
 fun MealListContent(
     uiState: HomeViewModel.HomeUiState,
     modifier: Modifier = Modifier) {
@@ -179,27 +165,6 @@ fun MealListContent(
 
     }
 }
-@Composable
-private fun ErrorState(errorMessage: String) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = stringResource(R.string.error_loading, errorMessage),
-            color = MaterialTheme.colorScheme.error
-        )
-    }
-}
 
-@Composable
-private fun EmptyState() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(stringResource(R.string.no_meals_found))
-    }
-}
+
+
