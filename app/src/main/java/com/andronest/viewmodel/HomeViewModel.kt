@@ -52,7 +52,9 @@ class HomeViewModel @Inject constructor(
 
         searchJob = viewModelScope.launch {
             try {
-               val results = repository.getMealByMainIngredient(ingredient)
+               val results = repository.getMealByMainIngredient(ingredient).takeIf {
+                   !it.isNullOrEmpty()
+               } ?: emptyList()
 
                 _uiState.update { it.copy(searchResults = results, isSearching = false) }
             } catch (e: Exception) {

@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(
-                        Navigation.Discover.route,
+                        Navigation.Discover.getBaseRoute(),
                         arguments = listOf(
                             navArgument("mealId"){
                                 type = NavType.StringType

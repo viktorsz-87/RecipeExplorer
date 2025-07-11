@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.andronest.R
 import com.andronest.composables.BottomAppBar
 import com.andronest.model.Meal
@@ -86,9 +85,9 @@ fun HomeScreen(
                     )
                 },
                 value = uiState.value.searchQuery,
+                //viewModel.searchText = it
                 onValueChange = {
-                    //viewModel.searchText = it
-                    viewModel::searchMealByIngredient
+                    viewModel.searchMealByIngredient(it)
                 },
                 modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -101,7 +100,7 @@ fun HomeScreen(
                 uiState.value.isLoading -> LoadingState()
                 uiState.value.error != null -> ErrorState(uiState.value.error?: "Error")
                 uiState.value.meals.isEmpty() -> EmptyState()
-                else -> MealListContent(uiState.value)
+                else -> MealListContent(uiState =  uiState.value, navController= navController)
             }
         }
     }
@@ -109,6 +108,7 @@ fun HomeScreen(
 
 @Composable
 fun MealListContent(
+    navController: NavController,
     uiState: HomeViewModel.HomeUiState,
     modifier: Modifier = Modifier) {
 
@@ -156,13 +156,12 @@ fun MealListContent(
         } else {
             items(displayList){meal->
                 HomeScreenItemCard(
-                    navController = rememberNavController(),
+                    navController = navController,
                     item=meal,
                     modifier= Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
         }
-
     }
 }
 

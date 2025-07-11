@@ -27,7 +27,7 @@ import com.andronest.ui.theme.ShowDetails
 @Composable
 fun HomeScreenItem(
     item: Meal,
-    onClick: () -> Unit = {},
+    onClick: () -> Unit,
     modifier: Modifier = Modifier) {
 
     Row(
